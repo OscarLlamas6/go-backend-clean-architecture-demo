@@ -4,7 +4,7 @@ services:
   web:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.Debug
     image: app
     container_name: app
     restart: unless-stopped
@@ -12,7 +12,10 @@ services:
     environment:
       - IS_DOCKER=TRUE
     ports:
+      - "40000:40000"
       - "8080:8080"
+    networks:
+      - my_network
     depends_on:
       - mongodb
 
@@ -26,8 +29,15 @@ services:
       - MONGO_INITDB_ROOT_PASSWORD=golang2023
     ports:
       - "27017:27017"
+    networks:
+      - my_network
     volumes:
       - ./dbdata:/data/db
 
 volumes:
   dbdata:
+
+networks:
+  my_network:
+    driver: bridge
+    name: my_network

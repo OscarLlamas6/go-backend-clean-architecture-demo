@@ -3,9 +3,9 @@ package main
 import (
 	"time"
 
-	routeV1 "github.com/amitshekhariitbhu/go-backend-clean-architecture/api/route/v1"
-	"github.com/amitshekhariitbhu/go-backend-clean-architecture/bootstrap"
 	"github.com/gin-gonic/gin"
+	routeV1 "github.com/oscarllamas6/go-backend-clean-architecture/api/route/v1"
+	"github.com/oscarllamas6/go-backend-clean-architecture/bootstrap"
 )
 
 func main() {
@@ -21,9 +21,11 @@ func main() {
 
 	gin := gin.Default()
 
-	routerV1 := gin.Group("v1")
+	// Creamos un grupo para poder versionar la api
+	routerVersion1 := gin.Group("v1")
 
-	routeV1.Setup(env, timeout, db, routerV1)
+	// Llamamos al setup del router
+	routeV1.Setup(env, timeout, db, routerVersion1)
 
 	gin.Run(env.ServerAddress)
 }
